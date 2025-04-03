@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vente de Burgers</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        .menu {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        .menu-item {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 1rem;
+            padding: 1rem;
+            width: 250px;
+            text-align: center;
+        }
+        .menu-item img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .menu-item h3 {
+            margin: 0.5rem 0;
+        }
+        .menu-item p {
+            color: #555;
+        }
+        form {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 2rem auto;
+            padding: 1rem;
+            max-width: 500px;
+        }
+        form div {
+            margin-bottom: 1rem;
+        }
+        form label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        form input, form select, form textarea, form button {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        form button {
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+        }
+        form button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>NOM DU RESTAURANT</h1>
+        <p>Les meilleurs burgers en ville !</p>
+    </header>
+
+    <section class="menu">
+        <div class="menu-item">
+            <img src="https://media.istockphoto.com/id/1492710381/fr/photo/double-burger-juteux.jpg?s=612x612&w=0&k=20&c=mg2-GGAdLM9QNwvsmhxc1E78tbPRwtWVnEmmLgipPvw=" alt="Burger Classique">
+            <h3>Burger Classique</h3>
+            <p>Un délicieux burger avec steak, fromage, et légumes frais.</p>
+            <p>Prix: 8€</p>
+        </div>
+        <div class="menu-item">
+            <img src="https://media.istockphoto.com/id/539243164/fr/photo/burger-de-poulet-croustillants.webp?a=1&b=1&s=612x612&w=0&k=20&c=yrrKHs1VcW-nKZt6ud3ejMGgJQDGBqMv-XaPFfWXOm4=" alt="Burger Poulet">
+            <h3>Burger Poulet</h3>
+            <p>Burger au poulet croustillant avec sauce spéciale.</p>
+            <p>Prix: 9€</p>
+        </div>
+        <div class="menu-item">
+            <img src="https://images.unsplash.com/photo-1520073201527-6b044ba2ca9f?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGJ1cmdlciUyMHZlZ2FufGVufDB8fDB8fHww" alt="Burger Vegan">
+            <h3>Burger Vegan</h3>
+            <p>Un burger 100% végétal avec des ingrédients frais.</p>
+            <p>Prix: 10€</p>
+        </div>
+    </section>
+
+    <form action="submit_order.php" method="POST">
+        <h2>Formulaire de Commande</h2>
+        <div>
+            <label for="name">Nom et Prénom:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div>
+            <label for="phone">Numéro de Téléphone:</label>
+            <input type="tel" id="phone" name="phone" required>            <?php
+            // Récupérer les données du formulaire
+            $name = htmlspecialchars($_POST['name']);
+            $phone = htmlspecialchars($_POST['phone']);
+            $address = htmlspecialchars($_POST['address']);
+            $burger = htmlspecialchars($_POST['burger']);
+            $quantity = (int)$_POST['quantity'];
+            
+            // Enregistrer les données dans un fichier ou une base de données
+            $orderData = "Nom: $nam  gnf e\nTéléphone: $phone\nAdresse: $address\nBurger: $burger\nQuantité: $quantity\n---\n";
+            file_put_contents('orders.txt', $orderData, FILE_APPEND);
+            
+            // Rediriger vers une page de confirmation
+            header('Location: confirmation.html');
+            exit;
+            ?>            <?php
+            // Récupérer les données du formulaire
+            $name = htmlspecialchars($_POST['name']);
+            $phone = htmlspecialchars($_POST['phone']);
+            $address = htmlspecialchars($_POST['address']);
+            $burger = htmlspecialchars($_POST['burger']);
+            $quantity = (int)$_POST['quantity'];
+            
+            // Enregistrer les données dans un fichier ou une base de données
+            $orderData = "Nom: $name\nTéléphone: $phone\nAdresse: $address\nBurger: $burger\nQuantité: $quantity\n---\n";
+            file_put_contents('orders.txt', $orderData, FILE_APPEND);
+            
+            // Rediriger vers une page de confirmation
+            header('Location: confirmation.html');
+            exit;
+            ?>
+        </div>
+        <div>
+            <label for="address">Adresse de Livraison:</label>
+            <textarea id="address" name="address" rows="3" required></textarea>
+        </div>
+        <div>
+            <label for="burger">Choisissez votre Burger:</label>
+            <select id="burger" name="burger" required>
+                <option value="classique">Burger Classique</option>
+                <option value="poulet">Burger Poulet</option>
+                <option value="vegan">Burger Vegan</option>
+            </select>
+        </div>
+        <div>
+            <label for="quantity">Quantité:</label>
+            <input type="number" id="quantity" name="quantity" min="1" required>
+        </div>
+        <button type="submit">Commander</button>
+    </form>
+</body>
+</html>
